@@ -1,0 +1,18 @@
+en el proyecto se crea una carpeta que se llame Data
+
+dentro de la carpeta data se crea un archivo datacontext.cs
+
+dentro de ese archivo datacontext es donde se migraran las tablas
+para eso se crea un methodo datacontext para que aplique la conexion
+y debajo de esos se colocan los dbset con el nombre el modelo y el nombre
+que tendra la tabla
+
+luego el conectionstring see coloca en el archivo appsettings.json
+
+y luego en el statup.cs se coloca la linea para que al momento en el que e ejecute el proyecto
+se mande a llamar la conexion
+
+
+
+
+documenta

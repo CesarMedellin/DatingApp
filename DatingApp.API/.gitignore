@@ -1,0 +1,5 @@
+#son los archivos que ignorara git para no detectar cambios
+.vcode
+bin
+obj
+*.db

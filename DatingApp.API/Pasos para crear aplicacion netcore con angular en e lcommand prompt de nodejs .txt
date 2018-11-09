@@ -1,0 +1,32 @@
+ya teniendo todo instalado
+
+-nnetcore 2.1
+-angular 6
+
+ en la ventana de comand primero accedemos a la ruta con
+el cd
+cd C://ruta
+-luego dentr de esa ruta
+ejecutar el comando mkdir nombre que genera una carpeta
+
+-luego accedemos a esa carpeta con el cd
+
+-luego dentro de la carpeta procedemos a crear el proyeto
+ que es con el cmando de dotnet new webapi -o DatingApp.API -n DatingApp.Api
+con el -o generara la ruta de salida donde se esta guardando el proyecto
+con el -n se le da el nombre al proyecto
+
+y luego para abrir el visual studio code desde la ventana de comando
+estando en la carpeta del proyecto colocamos solo code .(si con el punto)
+
+dentro de visual studio code necesitamos 
+c# language
+c# extensions
+nuget
+dejamos que se instale, esperamos y le damos si a todo
+
+para ejecutar el proyecto en la cosola se ejecuta con dotnet run y para pararlo con ctrl+c
+
+
+si se hicieron cambios en el proyecto y tienes el proyecto ejecutandose
+en la terminal solo vuelve a compilar con dotnet watch run
