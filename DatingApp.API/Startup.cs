@@ -30,6 +30,7 @@ namespace DatingApp.API
             services.AddDbContext<DataContext>(x=> x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));//aqui va a buscar en el archivo appsettings.json la conexion default
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();//este sirve para usar que se puedan llamar los servicios desde angular
+            services.AddScoped<IAuthRepository, AuthRepository>();//el scoped es un servicio que sirve para el authrepostorycpueda mandar a llamar el iauthrepository pero solo una vez por cada http request
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
