@@ -22,7 +22,7 @@ namespace DatingApp.API.Controllers
             //los archivos dto o los objetos dto sirven para que al momento de llenar un 
             //metodo o funcion no se tenga que enviar todos los campos como parametros 
             //y solo enviarlo en la clase del dto para un mejor orden
-
+//hola
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
             if (await _repo.UserExists(userForRegisterDto.Username))
             {
