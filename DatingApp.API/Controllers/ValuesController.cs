@@ -12,7 +12,7 @@ namespace DatingApp.API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : ControllerBase//el controllerbase sirve para que el controlador funcione sin vista y el controller sirve solo para que utilice la vista
     {
         private readonly DataContext _context;
         public ValuesController(DataContext context)
@@ -20,6 +20,7 @@ namespace DatingApp.API.Controllers
             _context = context;
         }
         // GET api/values
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Getvalues()
         {

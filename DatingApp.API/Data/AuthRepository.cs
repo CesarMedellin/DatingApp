@@ -49,7 +49,7 @@ namespace DatingApp.API.Data
         public async Task<User> Register(User user, string password)
         {
            byte[] passwordHash, passwordSalt;
-           CreatePasswordHash(password, out passwordHash, out passwordSalt);
+           CreatePasswordHash(password, out passwordHash, out passwordSalt);//el out es de que una vez que se actualize el valor del passwordHash dentro del metodo entonces el valor se retornara solo
            //lineaprocedimiento
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;

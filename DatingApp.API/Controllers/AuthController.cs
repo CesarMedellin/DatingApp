@@ -14,7 +14,7 @@ namespace DatingApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController :ControllerBase//el controllerbase sirve para que el controlador funcione sin vista y el controller sirve solo para que utilice la vista
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
@@ -79,7 +79,7 @@ namespace DatingApp.API.Controllers
             //como sus credenciales, sus claims y su fecha de expiracion que sera de un dia
             var tokenDescription = new SecurityTokenDescriptor{
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
+                Expires = DateTime.Now.AddDays(1),//puede ser addhours para validar que se guarde el token horas
                 SigningCredentials = creds
             };
             
