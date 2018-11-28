@@ -26,7 +26,7 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
     this.authService.login(this.model).subscribe(next => { // el subscribe es algo asi como un try catch en c#
       console.log('Login correcto'); // el next es porque hizo todo correcto
     }, error => { // error es porque ocurrio un error
-      console.log('Fallo el login');
+      console.log(error);
     }); // para mandar a llamar el objeto model se coloca el this e igual al mandar a llamar un metodo
     // de otra clase primero se referencia en el constructor y dentro de la funcion se manda a llamar con this de igual manera
   }

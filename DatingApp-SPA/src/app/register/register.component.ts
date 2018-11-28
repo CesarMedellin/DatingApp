@@ -24,7 +24,7 @@ model: any = {};
   register() {
     this.authService.register(this.model).subscribe(next => {
       console.log('Registrado'); }, error => {
-        console.log('ocurrio un problema la insertar');
+        console.log(error);
       });
   }
 
