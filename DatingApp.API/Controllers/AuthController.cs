@@ -76,7 +76,7 @@ namespace DatingApp.API.Controllers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
             //Aqui solo se guardan todos los atributos que contendra el token:
-            //como sus credenciales, sus claims y su fecha de expiracion que sera de un dia
+            //como sus credenciales, sus claims y su fecha de expiracion que sera de un dia despues del login
             var tokenDescription = new SecurityTokenDescriptor{
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),//puede ser addhours para validar que se guarde el token horas

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,8 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
 // y se manda a llamar dentro del ngSubmit del form en la funcion login
 
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService) { }
+// cuando es private solo se puede usar en el componnte pero cuando es public tambien se puede usar en la vista
 // en el constructor se hace esto, si se quieren usa frameworks o funciones de otro componente aqui viene siendo como el using en c#,
 // obvio tambien se tiene que poner el import arriba
 
@@ -24,21 +26,20 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
     // en la linea de abajo se manda a llamar una funcion de otro componente
     // cada vez que se utilize el httpclient te tienes que suscribir
     this.authService.login(this.model).subscribe(next => { // el subscribe es algo asi como un try catch en c#
-      console.log('Login correcto'); // el next es porque hizo todo correcto
+      this.alertify.success('Login correcto'); // el next es porque hizo todo correcto
     }, error => { // error es porque ocurrio un error
-      console.log(error);
+      this.alertify.error(error);
     }); // para mandar a llamar el objeto model se coloca el this e igual al mandar a llamar un metodo
     // de otra clase primero se referencia en el constructor y dentro de la funcion se manda a llamar con this de igual manera
   }
 
   loggedIn() {
-const token = localStorage.getItem('token');
-  return !!token; // esto es como un if si tiene algo que retorna o sino lo tiene
+    return this.authService.loggedIn();
   }
 
   logout() {
     localStorage.removeItem('token');
-    console.log('Usuario desconectado');
+    this.alertify.message('Usuario desconectado');
   }
 
 }
