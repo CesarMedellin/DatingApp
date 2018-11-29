@@ -20,7 +20,7 @@ login(model: any) {
       if (user) {
         localStorage.setItem('token', user.token); // es el servicio de login que si es correcto regresa el token del login
         this.decodedToken = this.jwtHelper.decodeToken(user.token);
-        console.log(this.decodedToken);
+        // console.log(this.decodedToken);
       }
     }
 

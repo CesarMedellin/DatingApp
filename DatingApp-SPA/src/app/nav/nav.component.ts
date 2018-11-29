@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +15,7 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
 // y se manda a llamar dentro del ngSubmit del form en la funcion login
 
 
-  constructor(public authService: AuthService, private alertify: AlertifyService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 // cuando es private solo se puede usar en el componnte pero cuando es public tambien se puede usar en la vista
 // en el constructor se hace esto, si se quieren usa frameworks o funciones de otro componente aqui viene siendo como el using en c#,
 // obvio tambien se tiene que poner el import arriba
@@ -29,6 +30,8 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
       this.alertify.success('Login correcto'); // el next es porque hizo todo correcto
     }, error => { // error es porque ocurrio un error
       this.alertify.error(error);
+    }, () => { // este es un parametro vacio, si llega en next va a members, pero no se con error
+      this.router.navigate(['/members']);
     }); // para mandar a llamar el objeto model se coloca el this e igual al mandar a llamar un metodo
     // de otra clase primero se referencia en el constructor y dentro de la funcion se manda a llamar con this de igual manera
   }
@@ -40,6 +43,7 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
   logout() {
     localStorage.removeItem('token');
     this.alertify.message('Usuario desconectado');
+    this.router.navigate(['/home']);
   }
 
 }
