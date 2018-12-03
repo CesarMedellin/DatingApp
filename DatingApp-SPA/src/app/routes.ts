@@ -18,7 +18,6 @@ export const appRoutes: Routes = [
             { path: 'lists', component: ListsComponent},
         ]
     },
- 
     { path: '**', redirectTo: '', pathMatch: 'full'}, // cualquier otra ruta te regresa a home
 ];
 

@@ -19,6 +19,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using DatingApp.API.Helpers;
+using AutoMapper;
+
 namespace DatingApp.API
 {
     public class Startup
@@ -34,10 +36,16 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x=> x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));//aqui va a buscar en el archivo appsettings.json la conexion default
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            .AddJsonOptions(opt => {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; // este funciono para que desde postman mandara registro de un usuario con autorizacion de otro
+            });
             services.AddCors();//este sirve para usar que se puedan llamar los servicios desde angular
+            services.AddAutoMapper();// sirve pr cundo queremso regresar una lista de una tabla pero solo siertos campos que tenemos en un modelo que se guarde los datos en el modelo automaticamente on una linea, ejemplo en userscontroller
+            services.AddTransient<seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();//el scoped es un servicio que sirve para el authrepostorycpueda mandar a llamar el iauthrepository pero solo una vez por cada http request
             //Este de abajo sirve para autenticar con el token para entrar a controladores
+            services.AddScoped<IDatingRepository, DatingRepository>(); // sirve como atajo para agregar, borrar usuarios, consultar usuario y usuarios
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -52,7 +60,7 @@ namespace DatingApp.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, seed seeder) // el seeder es un metodo para agregar registros  base de datos
         {
             if (env.IsDevelopment())
             {
@@ -77,6 +85,7 @@ namespace DatingApp.API
             }
 
             //app.UseHttpsRedirection();
+            //seeder.SeedUsers(); // metodo que utiliza un archivo json para cargar 10 usuarios con foto
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());//siempre va antes que el de mvc
             app.UseAuthentication();//para aplicar la autorizacion y codigo
             app.UseMvc();
