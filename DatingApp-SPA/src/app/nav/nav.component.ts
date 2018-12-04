@@ -26,7 +26,8 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
   login() {
     // en la linea de abajo se manda a llamar una funcion de otro componente
     // cada vez que se utilize el httpclient te tienes que suscribir
-    this.authService.login(this.model).subscribe(next => { // el subscribe es algo asi como un try catch en c#
+    // tslint:disable-next-line:max-line-length
+    this.authService.login(this.model).subscribe(next => { // el subscribe es algo asi como un try catch en c# pero se necesitan para poder ejecutarser los servicios
       this.alertify.success('Login correcto'); // el next es porque hizo todo correcto
     }, error => { // error es porque ocurrio un error
       this.alertify.error(error);
