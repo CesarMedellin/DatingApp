@@ -14,6 +14,8 @@ users: User[];
   constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // se conecta a un resolver en el routes.ts y el resolver es el que se conecta al servicio
+    // porque ntes todavia no regresaba de pedir los datos y ya habia cargado la pagina
     this.route.data.subscribe(data => {
     this.users = data['users'];
     });

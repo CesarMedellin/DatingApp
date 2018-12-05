@@ -18,6 +18,7 @@ galleryImages: NgxGalleryImage[];
   constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // el resolver se coloca en el routes.ts
     // tslint:disable-next-line:max-line-length
     this.route.data.subscribe(data => { // se usa un resolver porque esta pagina se abre apartir de un click en otra y es de manera asincrona, antes cargaba primero la pagina y daba error ahora ya espera a los datos
       this.user = data['user']; // aqui se suscribe al resolver que trajo la informacion para poder mostrarla
