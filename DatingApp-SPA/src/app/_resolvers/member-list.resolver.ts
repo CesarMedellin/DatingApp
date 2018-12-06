@@ -11,7 +11,8 @@ import { Observable, of } from 'rxjs';
  // Aqui el pipe lo utiizamos para retornar el error si es que lo muestra y si hay error te regresa a la pag members
 export class MemberListResolver implements Resolve<User[]> { // Implemta el resolve con user porque regresara el objeto de user
     constructor(private userService: UserService, private router: Router, private alertify: AlertifyService) {}
-resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
+
+    resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
     return this.userService.getUsers().pipe(
         catchError(error => {
             this.alertify.error('Problema recibiendo datos');

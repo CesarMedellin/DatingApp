@@ -13,7 +13,7 @@ export class NavComponent implements OnInit {
 model: any = {}; // este objeto servira para guardar aqui el password y el usuario
 // el model se esta recargando dentro de la vista del componente en el username y password
 // y se manda a llamar dentro del ngSubmit del form en la funcion login
-
+photoUrl: string; // variable para cargar la foto de perfil en navbar
 
   constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 // cuando es private solo se puede usar en el componnte pero cuando es public tambien se puede usar en la vista
@@ -21,6 +21,8 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
 // obvio tambien se tiene que poner el import arriba
 
   ngOnInit() {
+    // tslint:disable-next-line:max-line-length
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl); /// se obtiene del authservice la url de la foto y se cargara
   }
 
   login() {
@@ -43,6 +45,9 @@ model: any = {}; // este objeto servira para guardar aqui el password y el usuar
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authService.decodedToken = null; // se elimina esto para ya no tener datos del usuario con la sesion
+    this.authService.currentUser = null; // se elimina esto para ya no tener datos del usuario con la sesion
     this.alertify.message('Usuario desconectado');
     this.router.navigate(['/home']);
   }

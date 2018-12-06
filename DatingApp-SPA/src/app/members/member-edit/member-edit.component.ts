@@ -12,8 +12,9 @@ import { AuthService } from '../../_services/auth.service';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
-  @ViewChild('editForm') editForm: NgForm; // este sirve para poder acceder al form y asi
+  @ViewChild('editForm') editForm: NgForm; // este sirve para poder acceder a los datos del form y asi
   user: User;
+  photoUrl: string;
   // tslint:disable-next-line:max-line-length
   @HostListener('window:beforeunload', ['$event']) // este sirve para cuando quieras cerrar la pestaña te muestre un mensaje si no has guardado cambios
   unloadNotification($event: any) {
@@ -28,6 +29,8 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe(data => { // es lo primero que carga asi que carga la informacion desde el resolver
       this.user = data['user'];
     });
+
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   updateUser() {
@@ -40,6 +43,10 @@ export class MemberEditComponent implements OnInit {
     }, error => {
       this.alertify.error(error);
     });
+  }
+
+  updateMainPhoto(photoUrl) {
+    this.user.photoUrl = photoUrl;
   }
 
 }

@@ -45,7 +45,7 @@ namespace DatingApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
         {
-           if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+           if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) // Asi se valida si el usuario que esta solicitando la peticion sea el mismo al que desea modificar
            {
                return Unauthorized();
            }

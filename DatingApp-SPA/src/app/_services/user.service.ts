@@ -24,4 +24,13 @@ updateUser(id: number, user: User) {
   return this.http.put(this.baseUrl + 'users/' + id, user);
 }
 
+setMainPhoto(userId: number, id: number) {
+  // tslint:disable-next-line:max-line-length
+  return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + id + '/setMain', {}); // se tiene que enviar un objeto para que se pueda consumir, asi que se envia uno vacio
+}
+
+deletePhoto(userId: number, id: number) {
+  return this.http.delete(this.baseUrl + 'users/' + userId + '/photos/' + id);
+}
+
 }

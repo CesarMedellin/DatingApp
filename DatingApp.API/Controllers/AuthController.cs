@@ -9,17 +9,20 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using AutoMapper;
 
 namespace DatingApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController :ControllerBase//el controllerbase sirve para que el controlador funcione sin vista y el controller sirve solo para que utilice la vista
+    public class AuthController : ControllerBase//el controllerbase sirve para que el controlador funcione sin vista y el controller sirve solo para que utilice la vista
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
+            _mapper = mapper;
             _config = config;
             _repo = repo;
         }
@@ -77,20 +80,23 @@ namespace DatingApp.API.Controllers
 
             //Aqui solo se guardan todos los atributos que contendra el token:
             //como sus credenciales, sus claims y su fecha de expiracion que sera de un dia despues del login
-            var tokenDescription = new SecurityTokenDescriptor{
+            var tokenDescription = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),//puede ser addhours para validar que se guarde el token horas
                 SigningCredentials = creds
             };
-            
+
             //Este nos permite crear el token basado en el tokenDescription de arriba
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var token = tokenHandler.CreateToken(tokenDescription);
-
-            return Ok(new {
+            var user = _mapper.Map<UserForLIstDto>(userFromRepo);
+            return Ok(new
+            {
                 //Aqui se escribe el token que le regresaremos a los clientes
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user 
             });
         }
     }

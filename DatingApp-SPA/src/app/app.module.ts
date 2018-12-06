@@ -6,6 +6,8 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import {NgxGalleryModule} from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -27,6 +29,7 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChages } from './_guards/prevent-unsaved-changes.guard';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 
 
@@ -45,7 +48,8 @@ return localStorage.getItem('token');
       MessagesComponent,
       MembersCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
@@ -55,6 +59,7 @@ return localStorage.getItem('token');
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       NgxGalleryModule,
+      FileUploadModule,
       JwtModule.forRoot({
           config: {
               tokenGetter: tokenGetter,
@@ -72,7 +77,8 @@ return localStorage.getItem('token');
       MemberDetailResolver,
       MemberListResolver,
       MemberEditResolver,
-      PreventUnsavedChages
+      PreventUnsavedChages,
+      FileUploadModule
    ],
    bootstrap: [
       AppComponent

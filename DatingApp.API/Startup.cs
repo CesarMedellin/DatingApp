@@ -41,6 +41,7 @@ namespace DatingApp.API
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; // este funciono para que desde postman mandara registro de un usuario con autorizacion de otro
             });
             services.AddCors();//este sirve para usar que se puedan llamar los servicios desde angular
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper();// sirve pr cundo queremso regresar una lista de una tabla pero solo siertos campos que tenemos en un modelo que se guarde los datos en el modelo automaticamente on una linea, ejemplo en userscontroller
             services.AddTransient<seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();//el scoped es un servicio que sirve para el authrepostorycpueda mandar a llamar el iauthrepository pero solo una vez por cada http request
