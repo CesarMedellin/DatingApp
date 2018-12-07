@@ -41,13 +41,10 @@ namespace DatingApp.API.Controllers
                 return BadRequest("Usuario ya existe");
             }
 
-            var usertToCreate = new User
-            {
-                Username = userForRegisterDto.Username
-            };
-            var cratedUser = await _repo.Register(usertToCreate, userForRegisterDto.Password);
-
-            return StatusCode(201);
+            var usertToCreate = _mapper.Map<User>(userForRegisterDto);
+            var createdUser = await _repo.Register(usertToCreate, userForRegisterDto.Password);
+            var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser);
+            return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn); // asi se llama al metodo getuser del controlador
         }
 
         [HttpPost("login")]
