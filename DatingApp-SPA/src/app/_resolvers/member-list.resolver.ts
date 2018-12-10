@@ -10,10 +10,12 @@ import { Observable, of } from 'rxjs';
 @Injectable() // El resolver sirve para que cuando una pagina cargue mas rapido que en lo que se manda a llamar el servicio pues que no se cargue antes de recibir los datos del servicio
  // Aqui el pipe lo utiizamos para retornar el error si es que lo muestra y si hay error te regresa a la pag members
 export class MemberListResolver implements Resolve<User[]> { // Implemta el resolve con user porque regresara el objeto de user
+    pageNumber = 1;
+    pageSize = 5; // por default la api devuelve 10... No se en que casos manda el valor por default
     constructor(private userService: UserService, private router: Router, private alertify: AlertifyService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    return this.userService.getUsers().pipe(
+    return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
         catchError(error => {
             this.alertify.error('Problema recibiendo datos');
             this.router.navigate(['/home']); // aqui te regresa al home si hay error

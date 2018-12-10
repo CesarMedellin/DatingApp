@@ -26,12 +26,25 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _repo.GetUsers();
+            // sirve para la paginacion, primero se trae el id y luego el usuario del login
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var userFromRepo = await _repo.GetUser(currentUserId);
+            // luego al userparams se le da el id del usuario que hizo la peticion
+            userParams.UserId = currentUserId;
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                // aqui dependiendo el genero del que sea el del login mandara el genero contrario
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            }
+            var users = await _repo.GetUsers(userParams);
             
             var usersToReturn = _mapper.Map<IEnumerable<UserForLIstDto>>(users);//el ienumerable es porque regresa una lista
             
+            // f
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
             return Ok(usersToReturn);
         }
         [HttpGet("{id}", Name="GetUser")] // el nombre sirve para que se pueda utilizar el metodo desde otro metodo
