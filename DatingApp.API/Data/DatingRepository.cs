@@ -62,7 +62,13 @@ namespace DatingApp.API.Data
             // de todos los usuarios excluira el que hizo la peticion
            users = users.Where(u => u.Id != UserParams.UserId);
             // de todos los usuarios traera por default el genero contrario al usuario de la peticion
-           users = users.Where(u => u.Gender == UserParams.Gender);
+
+            // aqui es para saber si entrara a la pagina de todos los usuarios o a la lista de los likes
+            if (!UserParams.Likees && !UserParams.Likers)
+            {
+                users = users.Where(u => u.Gender == UserParams.Gender);
+            }
+
 
            // usuarios que les di likes
            if (UserParams.Likers)
