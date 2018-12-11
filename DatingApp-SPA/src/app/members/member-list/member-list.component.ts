@@ -40,7 +40,7 @@ pagination: Pagination;
 
   // tslint:disable-next-line:max-line-length
   loadUsers() { // este load users manda la pagina actual y los items por paginas actuales al servicio de getusers para regresar la paginacion que se coloco
-    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
+    this.userService.getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams, null)
     .subscribe((res: PaginatedResult<User[]>) => {
       this.users = res.result;
       this.pagination = res.pagination;

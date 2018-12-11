@@ -10,6 +10,7 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChages } from './_guards/prevent-unsaved-changes.guard';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 export const appRoutes: Routes = [
     { path: 'home', component: HomeComponent},
@@ -25,7 +26,7 @@ export const appRoutes: Routes = [
             // tslint:disable-next-line:max-line-length
             { path: 'member/edit', component: MemberEditComponent, resolve: {user: MemberEditResolver}, canDeactivate: [PreventUnsavedChages]},
             { path: 'messages', component: MessagesComponent},
-            { path: 'lists', component: ListsComponent},
+            { path: 'lists', component: ListsComponent, resolve: {users: ListsResolver}},
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full'}, // cualquier otra ruta te regresa a home

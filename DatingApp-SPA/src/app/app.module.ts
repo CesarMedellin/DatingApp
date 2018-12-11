@@ -30,6 +30,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChages } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { ListsResolver } from './_resolvers/lists.resolver';
 
 
 
@@ -82,6 +83,7 @@ return localStorage.getItem('token');
       MemberDetailResolver,
       MemberListResolver,
       MemberEditResolver,
+      ListsResolver,
       PreventUnsavedChages,
       FileUploadModule
    ],
