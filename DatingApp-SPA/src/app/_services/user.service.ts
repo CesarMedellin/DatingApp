@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { PaginatedResult } from '../_models/pagination';
 import { map } from 'rxjs/operators';
+import { Message } from '../_models/message';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,52 @@ deletePhoto(userId: number, id: number) {
 
 sendLike(id: number, recipientId: number) {
   return this.http.post(this.baseUrl + 'users/' + id + '/like/' + recipientId, {});
+}
+
+getMessages(id: number, page?, itemsPerPage?, messageContainer?) {
+  const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+
+  // tslint:disable-next-line:max-line-length
+  let params = new HttpParams(); // el httpParams sirve para que en la url agregue parametros ej. en cada append se veria asi google.com/pagenumber=1 y asi
+
+  params = params.append('MessageContainer', messageContainer);
+
+    // if para paginacion
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', {observe: 'response', params})
+    .pipe( // con el observe response podemos ver el resultado que regreso la solicitud, el manejo del error se hara desde el resolver
+      // que es donde se manda a llamar, y aqui solo se mapea el resultado de response y se guarda la paginacion en paginatedresult
+      // que tambien guarda la lista de lo que retorno
+      map(response => {
+        paginatedResult.result = response.body;
+        if (response.headers.get('Pagination') !== null) {
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+        return paginatedResult;
+      })
+    );
+}
+
+
+getMessageThread(id: number, recipientId: number) {
+  return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId);
+}
+
+sendMessage(id: number, message: Message) {
+  return this.http.post(this.baseUrl + 'users/' + id + '/messages/', message);
+}
+
+deleteMessage(id: number, userId: number) {
+  return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id, {});
+}
+
+markAsRead(userId: number, messageId: number) {
+  this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {})
+  .subscribe();
 }
 
 }

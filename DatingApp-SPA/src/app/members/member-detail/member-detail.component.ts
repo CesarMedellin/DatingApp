@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../_models/user';
 import { AlertifyService } from '../../_services/alertify.service';
 import { UserService } from '../../_services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { TabsetComponent } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-member-detail',
@@ -12,6 +13,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 })
 export class MemberDetailComponent implements OnInit {
 user: User;
+@ViewChild('memberTabs') memberTabs: TabsetComponent;
 // dos variables del tipo de ngxgallery para mostrar imagenes
 galleryOptions: NgxGalleryOptions[];
 galleryImages: NgxGalleryImage[];
@@ -22,6 +24,12 @@ galleryImages: NgxGalleryImage[];
     // tslint:disable-next-line:max-line-length
     this.route.data.subscribe(data => { // se usa un resolver porque esta pagina se abre apartir de un click en otra y es de manera asincrona, antes cargaba primero la pagina y daba error ahora ya espera a los datos
       this.user = data['user']; // aqui se suscribe al resolver que trajo la informacion para poder mostrarla
+    });
+
+    // recibir el parametro del query para entrar a mensajes
+    this.route.queryParams.subscribe(params => {
+      const selectedTab = params['tab'];
+      this.memberTabs.tabs[selectedTab > 0 ? selectedTab : 0].active = true;
     });
 
     // asi se cargaria la galeria
@@ -66,5 +74,7 @@ galleryImages: NgxGalleryImage[];
       // this.alertify.error(error);
     // });
   // }
-
+selectTab(tabId: number) {
+  this.memberTabs.tabs[tabId].active = true;
+}
 }

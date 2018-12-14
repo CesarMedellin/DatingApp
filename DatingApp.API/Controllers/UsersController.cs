@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.API.Controllers
 {
-    [ServiceFilter(typeof(LogUserActivity))]
+    [ServiceFilter(typeof(LogUserActivity))] // cada vez que entre a un metodo de este controlador se ejecutara esta funcion que actualiza la ultima hora activa del usuario
     [Authorize]
     [Route("api/[controller]")] // este es para que se pueda acceder al controlador mas facil ejemplo http://localhost:5000/api/users
     [ApiController]

@@ -11,6 +11,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChages } from './_guards/prevent-unsaved-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
 
 export const appRoutes: Routes = [
     { path: 'home', component: HomeComponent},
@@ -25,11 +26,11 @@ export const appRoutes: Routes = [
             { path: 'members/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver}}, // como se carga de manera asincrona esta pagina se utiliza un resolver, primero entra al resolver para traer los datos y luego ya carga la pagina
             // tslint:disable-next-line:max-line-length
             { path: 'member/edit', component: MemberEditComponent, resolve: {user: MemberEditResolver}, canDeactivate: [PreventUnsavedChages]},
-            { path: 'messages', component: MessagesComponent},
+            { path: 'messages', component: MessagesComponent, resolve: {messages: MessagesResolver}},
             { path: 'lists', component: ListsComponent, resolve: {users: ListsResolver}},
         ]
     },
-    { path: '**', redirectTo: '', pathMatch: 'full'}, // cualquier otra ruta te regresa a home
+    { path: '**', redirectTo: 'home', pathMatch: 'full'}, // cualquier otra ruta te regresa a home
 ];
 
 // ejemplo: en el navbar si quieres poner rutas en la ruta se le pone [routerLink]="['/pagina']"  y el routerinkactive o el atajo a-router

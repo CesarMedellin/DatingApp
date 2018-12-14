@@ -31,6 +31,8 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChages } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 
 
@@ -51,7 +53,8 @@ return localStorage.getItem('token');
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,
@@ -67,7 +70,7 @@ return localStorage.getItem('token');
       NgxGalleryModule,
       FileUploadModule,
       JwtModule.forRoot({
-          config: {
+          config: { // en que paginas del dominio se podra utilizar el token y en cuales no
               tokenGetter: tokenGetter,
               whitelistedDomains: ['localhost:5000'],
               blacklistedRoutes: ['localhost:5000/api/auth']
@@ -85,7 +88,8 @@ return localStorage.getItem('token');
       MemberEditResolver,
       ListsResolver,
       PreventUnsavedChages,
-      FileUploadModule
+      FileUploadModule,
+      MessagesResolver
    ],
    bootstrap: [
       AppComponent

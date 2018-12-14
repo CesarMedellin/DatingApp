@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace DatingApp.API.Helpers
 {
     public class LogUserActivity : IAsyncActionFilter // este sirve para llamarse en acciones, y cada vez que se ejecute una accion y tiene este metodo hara el proceso de aqui
-    {
+    { // que sirve para validar la ultima hora activa del usuario
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var resultContext = await next();
